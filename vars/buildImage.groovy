@@ -2,13 +2,10 @@
 
 
 def call (String imageName) {
-    def buildImage() {
     echo 'build and push image...'
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         sh "docker build -t $imageName ."
         sh 'echo $PASS | docker login -u $USER --password-stdin'
         sh "docker push $imageName"
     }
-
-  }
 }
